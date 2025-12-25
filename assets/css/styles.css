@@ -509,13 +509,34 @@ p, .lead {
   z-index: 1;
 }
 
+.terminal:after{
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 18px;
+  background: repeating-linear-gradient(
+    0deg,
+    rgba(0, 0, 0, 0.15) 0px,
+    transparent 1px,
+    transparent 2px,
+    rgba(0, 0, 0, 0.15) 3px
+  );
+  pointer-events: none;
+  z-index: 3;
+  animation: scanline 8s linear infinite;
+}
+
+@keyframes scanline {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(10px); }
+}
+
 .terminal:hover{
   border-color: rgba(100,255,218,.4);
   box-shadow: 
     0 0 20px rgba(100,255,218,.3),
     inset 0 0 80px rgba(0,0,0,.4),
     0 30px 80px rgba(0,0,0,.6);
-  transform: scale(1.01);
 }
 .terminal .bar{
   display:flex;
@@ -570,9 +591,11 @@ p, .lead {
   font-size: 0.85rem;
   font-family: "Share Tech Mono", monospace;
   cursor: pointer;
-  transition: all 0.3s ease;
+  transition: all 0.2s ease;
   position: relative;
   overflow: hidden;
+  white-space: nowrap;
+  flex-shrink: 0;
 }
 
 .terminal-cmd-btn:before {
@@ -584,12 +607,12 @@ p, .lead {
   border-color: rgba(100,255,218,.6);
   background: rgba(100,255,218,.15);
   color: var(--fg);
-  transform: translateY(-2px);
-  box-shadow: 0 5px 20px rgba(100,255,218,.25);
+  box-shadow: 0 3px 15px rgba(100,255,218,.2);
 }
 
 .terminal-cmd-btn:active {
-  transform: translateY(0);
+  background: rgba(100,255,218,.25);
+  box-shadow: 0 1px 8px rgba(100,255,218,.3);
 }
 .dot-red,.dot-yellow,.dot-green{
   width:10px;height:10px;border-radius:999px; display:inline-block;
@@ -606,18 +629,24 @@ p, .lead {
   position: relative;
   z-index: 2;
   text-shadow: 
-    0 0 5px rgba(100,255,218,.4),
-    0 0 10px rgba(100,255,218,.2);
+    0 0 8px rgba(100,255,218,.5),
+    0 0 15px rgba(100,255,218,.3),
+    0 0 2px rgba(100,255,218,.8);
+  letter-spacing: 0.3px;
+  line-height: 1.6;
 }
 .cursor{
   display:inline-block;
   width: 10px;
   height: 1.1em;
-  background: rgba(100,255,218,.9);
+  background: rgba(100,255,218,.95);
   margin-left: 2px;
   transform: translateY(2px);
   animation: blink 1s steps(1,end) infinite;
-  box-shadow: 0 0 10px rgba(100,255,218,.6);
+  box-shadow: 
+    0 0 12px rgba(100,255,218,.8),
+    0 0 20px rgba(100,255,218,.5),
+    0 0 5px rgba(100,255,218,1);
 }
 @keyframes blink{ 
   50% { opacity: 0; } 

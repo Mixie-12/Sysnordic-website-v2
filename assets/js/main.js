@@ -42,6 +42,7 @@
 
   // ===== Interactive Terminal System =====
   const target = document.getElementById("terminalText");
+  const cursor = document.querySelector(".terminal .cursor");
   if(!target) return;
 
   const commandOutputs = {
@@ -138,32 +139,36 @@
   let isTyping = false;
   let typingTimeout = null;
 
-  // Typing animation
+  // Typing animation with cursor management
   function typeText(lines, callback) {
     if(prefersReduced) {
       target.textContent = lines.join("\n");
+      if(cursor) cursor.style.display = 'inline-block';
       if(callback) callback();
       return;
     }
 
     isTyping = true;
     target.textContent = '';
+    if(cursor) cursor.style.display = 'none'; // Hide cursor during typing
+    
     let lineIndex = 0, charIndex = 0;
-    const minSpeed = 15;
-    const maxSpeed = 45;
-    const lineDelay = 120;
+    const minSpeed = 12;
+    const maxSpeed = 35;
+    const lineDelay = 80;
 
     function getRandomSpeed() {
       return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
     }
 
     function shouldPause() {
-      return Math.random() < 0.06;
+      return Math.random() < 0.05;
     }
 
     function tick(){
       if(lineIndex >= lines.length) {
         isTyping = false;
+        if(cursor) cursor.style.display = 'inline-block'; // Show cursor when done
         if(callback) callback();
         return;
       }
@@ -178,7 +183,7 @@
       if(charIndex < line.length) {
         target.textContent += line.charAt(charIndex);
         charIndex++;
-        const delay = shouldPause() ? 180 : getRandomSpeed();
+        const delay = shouldPause() ? 150 : getRandomSpeed();
         typingTimeout = setTimeout(tick, delay);
       } else {
         target.textContent += "\n";
@@ -206,19 +211,24 @@
   // Initial run
   setTimeout(() => runCommand('init'), 400);
 
-  // Command buttons
+  // Command buttons - prevent default and stop event propagation
   document.querySelectorAll('.terminal-cmd-btn').forEach(btn => {
     btn.addEventListener('click', (e) => {
       e.preventDefault();
+      e.stopPropagation();
       const cmd = btn.getAttribute('data-cmd');
-      runCommand(cmd);
+      if(cmd) {
+        runCommand(cmd);
+      }
     });
   });
 
   // Copy button
   const copyBtn = document.getElementById('terminalCopy');
   if(copyBtn) {
-    copyBtn.addEventListener('click', () => {
+    copyBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       const text = target.textContent;
       navigator.clipboard.writeText(text).then(() => {
         const originalText = copyBtn.textContent;
@@ -235,7 +245,9 @@
   // Rerun button
   const rerunBtn = document.getElementById('terminalRerun');
   if(rerunBtn) {
-    rerunBtn.addEventListener('click', () => {
+    rerunBtn.addEventListener('click', (e) => {
+      e.preventDefault();
+      e.stopPropagation();
       runCommand(currentCommand);
     });
   }
