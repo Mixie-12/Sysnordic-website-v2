@@ -271,6 +271,11 @@
     let mouseX = 0;
     let mouseY = 0;
     
+    // Constants for particle system
+    const PARTICLE_DENSITY_DIVISOR = 15000; // Particles per pixel area (lower = more dense)
+    const MOUSE_INTERACTION_RADIUS = 150; // Pixels
+    const CONNECTION_DISTANCE = 150; // Maximum distance to draw connections between particles
+    
     function resizeCanvas() {
       canvas.width = window.innerWidth;
       canvas.height = window.innerHeight;
@@ -304,7 +309,7 @@
         const dy = mouseY - this.y;
         const distance = Math.sqrt(dx * dx + dy * dy);
         
-        if(distance < 150) {
+        if(distance < MOUSE_INTERACTION_RADIUS) {
           const angle = Math.atan2(dy, dx);
           this.x -= Math.cos(angle) * 0.5;
           this.y -= Math.sin(angle) * 0.5;
@@ -319,8 +324,8 @@
       }
     }
     
-    // Create particles
-    const particleCount = Math.min(80, Math.floor(canvas.width * canvas.height / 15000));
+    // Create particles based on screen size
+    const particleCount = Math.min(80, Math.floor(canvas.width * canvas.height / PARTICLE_DENSITY_DIVISOR));
     for(let i = 0; i < particleCount; i++) {
       particles.push(new Particle());
     }
@@ -331,7 +336,7 @@
       mouseY = e.clientY;
     });
     
-    // Draw connections
+    // Draw connections between nearby particles
     function drawConnections() {
       for(let i = 0; i < particles.length; i++) {
         for(let j = i + 1; j < particles.length; j++) {
@@ -339,8 +344,8 @@
           const dy = particles[i].y - particles[j].y;
           const distance = Math.sqrt(dx * dx + dy * dy);
           
-          if(distance < 150) {
-            const opacity = (1 - distance / 150) * 0.3;
+          if(distance < CONNECTION_DISTANCE) {
+            const opacity = (1 - distance / CONNECTION_DISTANCE) * 0.3;
             ctx.strokeStyle = `rgba(122, 167, 255, ${opacity})`;
             ctx.lineWidth = 1;
             ctx.beginPath();

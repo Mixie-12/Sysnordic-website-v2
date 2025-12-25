@@ -61,7 +61,6 @@ a:hover{ color: var(--accent); }
   font-weight: 400;
   letter-spacing: 0.08em;
   text-transform: uppercase;
-  font-size: 0.85em;
   line-height: 1.4;
 }
 
@@ -69,6 +68,11 @@ a:hover{ color: var(--accent); }
   font-family: "Orbitron", "Space Grotesk", system-ui, sans-serif; 
   font-weight: 700;
   letter-spacing: 0.02em;
+}
+
+/* Apply nothing-font sizing only to h1 elements */
+h1.nothing-font {
+  font-size: 0.85em;
 }
 
 /* Subtle scanlines + noise */
