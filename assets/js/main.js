@@ -549,4 +549,26 @@
     });
   }
 
+  // ===== Animate Metric Bars on Scroll =====
+  const metricBarsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const bars = entry.target.querySelectorAll('.metric-bar');
+        bars.forEach((bar, index) => {
+          setTimeout(() => {
+            bar.style.opacity = '1';
+            // Trigger reflow to restart animation
+            void bar.offsetWidth;
+          }, index * 100);
+        });
+      }
+    });
+  }, { threshold: 0.3 });
+
+  document.querySelectorAll('.case-study-card').forEach(card => {
+    const bars = card.querySelectorAll('.metric-bar');
+    bars.forEach(bar => bar.style.opacity = '0');
+    metricBarsObserver.observe(card);
+  });
+
 })();
