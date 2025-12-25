@@ -369,4 +369,184 @@
     animate();
   }
 
+  // ===== Animated Counters =====
+  function animateCounter(element, target, duration = 2000) {
+    const start = 0;
+    const startTime = performance.now();
+    
+    function update(currentTime) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      
+      // Easing function (easeOutExpo)
+      const easeProgress = progress === 1 ? 1 : 1 - Math.pow(2, -10 * progress);
+      const current = start + (target - start) * easeProgress;
+      
+      element.textContent = Math.floor(current * 10) / 10;
+      
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        element.textContent = target;
+      }
+    }
+    
+    requestAnimationFrame(update);
+  }
+
+  // Observe metric cards for animation
+  const metricsObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        const valueEl = entry.target;
+        const target = parseFloat(valueEl.getAttribute('data-target'));
+        if (!valueEl.classList.contains('animated')) {
+          valueEl.classList.add('animated');
+          animateCounter(valueEl, target);
+        }
+      }
+    });
+  }, { threshold: 0.5 });
+
+  document.querySelectorAll('.metric-value').forEach(el => {
+    metricsObserver.observe(el);
+  });
+
+  // ===== Konami Code Easter Egg =====
+  const konamiCode = ['ArrowUp', 'ArrowUp', 'ArrowDown', 'ArrowDown', 'ArrowLeft', 'ArrowRight', 'ArrowLeft', 'ArrowRight', 'b', 'a'];
+  let konamiIndex = 0;
+  let incidentModeActive = false;
+
+  document.addEventListener('keydown', (e) => {
+    if (e.key === konamiCode[konamiIndex]) {
+      konamiIndex++;
+      if (konamiIndex === konamiCode.length) {
+        toggleIncidentMode();
+        konamiIndex = 0;
+      }
+    } else {
+      konamiIndex = 0;
+    }
+  });
+
+  function toggleIncidentMode() {
+    incidentModeActive = !incidentModeActive;
+    
+    if (incidentModeActive) {
+      document.body.classList.add('incident-mode');
+      
+      // Run alert command in terminal
+      const scanBtn = document.querySelector('[data-cmd="alerts"]');
+      if (scanBtn) scanBtn.click();
+      
+      // Show notification
+      showNotification('🚨 INCIDENT MODE ACTIVATED', 'Security alert simulation enabled');
+    } else {
+      document.body.classList.remove('incident-mode');
+      
+      // Reset to init
+      const initBtn = document.querySelector('[data-cmd="scan"]');
+      if (initBtn) {
+        runCommand('init');
+      }
+      
+      showNotification('✓ INCIDENT MODE DEACTIVATED', 'Normal operations resumed');
+    }
+  }
+
+  function showNotification(title, message) {
+    const notification = document.createElement('div');
+    notification.className = 'easter-egg-notification';
+    notification.innerHTML = `
+      <div class="notification-title">${title}</div>
+      <div class="notification-message">${message}</div>
+    `;
+    document.body.appendChild(notification);
+    
+    setTimeout(() => {
+      notification.classList.add('show');
+    }, 100);
+    
+    setTimeout(() => {
+      notification.classList.remove('show');
+      setTimeout(() => notification.remove(), 300);
+    }, 3000);
+  }
+
+  // ===== Interactive Timeline =====
+  const timelineItems = document.querySelectorAll('.t-item.clickable');
+  const timelineProgress = document.getElementById('timelineProgress');
+  
+  if (timelineItems.length > 0 && timelineProgress) {
+    let currentStep = 0;
+    
+    function updateTimeline(step) {
+      // Remove active class from all
+      timelineItems.forEach(item => item.classList.remove('active'));
+      
+      // Add active class to clicked step
+      if (step > 0 && step <= timelineItems.length) {
+        timelineItems[step - 1].classList.add('active');
+        currentStep = step;
+        
+        // Update progress bar
+        const itemHeight = timelineItems[0].offsetHeight;
+        const progressHeight = (step - 1) * itemHeight + (itemHeight / 2);
+        timelineProgress.style.height = progressHeight + 'px';
+      }
+    }
+    
+    // Click handlers
+    timelineItems.forEach((item, index) => {
+      item.addEventListener('click', () => {
+        updateTimeline(index + 1);
+      });
+    });
+    
+    // Auto-animate timeline on scroll into view
+    const timelineObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting && currentStep === 0) {
+          // Animate through steps
+          let step = 1;
+          const interval = setInterval(() => {
+            updateTimeline(step);
+            step++;
+            if (step > timelineItems.length) {
+              clearInterval(interval);
+            }
+          }, 600);
+        }
+      });
+    }, { threshold: 0.3 });
+    
+    if (timelineItems[0]) {
+      timelineObserver.observe(timelineItems[0].closest('.timeline'));
+    }
+  }
+
+  // ===== Magnetic Button Effect =====
+  if(!prefersReduced) {
+    const magneticButtons = document.querySelectorAll('.btn-glow, .btn-primary-cta');
+    
+    magneticButtons.forEach(btn => {
+      btn.classList.add('magnetic');
+      
+      btn.addEventListener('mousemove', (e) => {
+        const rect = btn.getBoundingClientRect();
+        const x = e.clientX - rect.left - rect.width / 2;
+        const y = e.clientY - rect.top - rect.height / 2;
+        
+        const moveX = x * 0.15;
+        const moveY = y * 0.15;
+        
+        btn.style.transform = `translate(${moveX}px, ${moveY}px) scale(1.05)`;
+      });
+      
+      btn.addEventListener('mouseleave', () => {
+        btn.style.transform = '';
+      });
+    });
+  }
+
 })();
