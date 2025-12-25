@@ -26,6 +26,17 @@
 }
 
 html,body{height:100%;}
+
+#particleCanvas {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+}
+
 body{
   background: radial-gradient(1200px 800px at 20% 10%, rgba(122,167,255,.10), transparent 55%),
               radial-gradient(900px 700px at 75% 25%, rgba(100,255,218,.08), transparent 55%),
@@ -45,7 +56,16 @@ a:hover{ color: var(--accent); }
 .mono{ font-family: "Share Tech Mono", ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", monospace; }
 
 /* Nothing-inspired font for headings and special elements */
-.nothing-font, .display-5 { 
+.nothing-font { 
+  font-family: "Space Grotesk", system-ui, sans-serif; 
+  font-weight: 400;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  font-size: 0.85em;
+  line-height: 1.4;
+}
+
+.display-5 { 
   font-family: "Orbitron", "Space Grotesk", system-ui, sans-serif; 
   font-weight: 700;
   letter-spacing: 0.02em;
@@ -114,8 +134,18 @@ a:hover{ color: var(--accent); }
 
 /* Layout helpers */
 .container-xxl{ position:relative; z-index:1; }
-.section{ padding: 92px 0; }
-.section-sm{ padding: 64px 0; }
+.section{ padding: 120px 0; }
+.section-sm{ padding: 80px 0; }
+
+/* Typography improvements */
+p, .lead {
+  line-height: 1.7;
+  max-width: 65ch;
+}
+
+.lead {
+  line-height: 1.8;
+}
 
 .badge-pill{
   display:inline-flex;
@@ -169,6 +199,15 @@ a:hover{ color: var(--accent); }
   backdrop-filter: blur(14px);
   border-bottom: 1px solid rgba(130,170,255,.12);
   transition: all 0.3s ease;
+}
+
+.navbar.scrolled {
+  background: rgba(6, 8, 14, .85) !important;
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid rgba(130,170,255,.25);
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+  box-shadow: 0 10px 40px rgba(0,0,0,.4);
 }
 .navbar .nav-link{ 
   color: rgba(233,238,252,.78); 
@@ -302,7 +341,33 @@ a:hover{ color: var(--accent); }
   line-height: 1.02;
 }
 .hero .lead{ color: var(--muted); }
-.hero-cta{ display:flex; gap:.75rem; flex-wrap:wrap; }
+.hero-cta{ display:flex; gap:.75rem; flex-wrap:wrap; align-items:center; }
+
+.btn-primary-cta {
+  font-size: 1.05rem;
+  padding: .85rem 1.5rem;
+  font-weight: 600;
+}
+
+.hero-proof-line {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: center;
+  font-size: 0.9rem;
+  color: var(--muted);
+  font-family: "Share Tech Mono", monospace;
+}
+
+.proof-item {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.35rem;
+}
+
+.proof-separator {
+  color: rgba(233,238,252,.3);
+}
 
 .kpi{
   display:flex; align-items:flex-start; gap:.75rem;
@@ -371,6 +436,72 @@ a:hover{ color: var(--accent); }
   border-bottom: 1px solid rgba(122,167,255,.16);
   background: rgba(10, 12, 20, .55);
 }
+
+.terminal-controls {
+  display: flex;
+  gap: 0.5rem;
+}
+
+.terminal-btn {
+  background: transparent;
+  border: 1px solid rgba(130,170,255,.2);
+  color: var(--muted);
+  border-radius: 6px;
+  padding: 0.25rem 0.5rem;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.25s ease;
+}
+
+.terminal-btn:hover {
+  border-color: rgba(100,255,218,.5);
+  color: var(--accent);
+  background: rgba(100,255,218,.1);
+  transform: scale(1.05);
+}
+
+.terminal-input-area {
+  padding: 0.75rem 1rem;
+  border-top: 1px solid rgba(122,167,255,.12);
+  background: rgba(6, 8, 14, .45);
+}
+
+.terminal-commands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.5rem;
+}
+
+.terminal-cmd-btn {
+  background: rgba(20, 28, 45, .5);
+  border: 1px solid rgba(130,170,255,.25);
+  color: rgba(233,238,252,.85);
+  border-radius: 8px;
+  padding: 0.4rem 0.75rem;
+  font-size: 0.85rem;
+  font-family: "Share Tech Mono", monospace;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
+}
+
+.terminal-cmd-btn:before {
+  content: '$ ';
+  color: var(--accent);
+}
+
+.terminal-cmd-btn:hover {
+  border-color: rgba(100,255,218,.6);
+  background: rgba(100,255,218,.15);
+  color: var(--fg);
+  transform: translateY(-2px);
+  box-shadow: 0 5px 20px rgba(100,255,218,.25);
+}
+
+.terminal-cmd-btn:active {
+  transform: translateY(0);
+}
 .dot-red,.dot-yellow,.dot-green{
   width:10px;height:10px;border-radius:999px; display:inline-block;
 }
@@ -428,13 +559,20 @@ a:hover{ color: var(--accent); }
   padding: 22px;
   height: 100%;
   transition: all .3s ease;
+  position: relative;
 }
+
 .feature-card:hover{
   transform: translateY(-6px);
   border-color: rgba(100,255,218,.45);
   box-shadow: 
     0 20px 60px rgba(0,0,0,.6),
     0 0 40px rgba(100,255,218,.15);
+}
+
+/* Card tilt effect on hover */
+.feature-card.tilt-active {
+  transition: transform 0.1s ease-out;
 }
 
 .hr-soft{
