@@ -1,5 +1,5 @@
 /* Sysnordic UI micro-interactions:
-   - Hero terminal typing
+   - Hero terminal typing (enhanced with realistic delays)
    - Reveal on scroll
    - Smooth scroll for in-page anchors
 */
@@ -27,7 +27,7 @@
   }, {threshold: 0.18});
   document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
-  // Terminal typing
+  // Enhanced Terminal typing with realistic delays
   const target = document.getElementById("terminalText");
   if(!target) return;
 
@@ -47,21 +47,50 @@
   }
 
   let lineIndex = 0, charIndex = 0;
-  const speed = 18; // ms
+  const minSpeed = 25;  // ms - minimum typing speed
+  const maxSpeed = 65;  // ms - maximum typing speed
+  const lineDelay = 180; // ms - delay between lines
+
+  // Random typing speed for more realistic feel
+  function getRandomSpeed() {
+    return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
+  }
+
+  // Simulate occasional pauses (like thinking)
+  function shouldPause() {
+    return Math.random() < 0.08; // 8% chance of pause
+  }
 
   function tick(){
-    if(lineIndex >= lines.length) return;
+    if(lineIndex >= lines.length) {
+      // Terminal complete - could add a completion callback here
+      return;
+    }
+    
     const line = lines[lineIndex];
-    target.textContent += line.charAt(charIndex);
-    charIndex++;
-    if(charIndex > line.length){
+    
+    if(charIndex === 0 && lineIndex > 0) {
+      // Small delay before starting a new line
+      setTimeout(tick, lineDelay);
+      return;
+    }
+    
+    if(charIndex < line.length) {
+      target.textContent += line.charAt(charIndex);
+      charIndex++;
+      
+      // Occasional pause for realism
+      const delay = shouldPause() ? 200 : getRandomSpeed();
+      setTimeout(tick, delay);
+    } else {
+      // Line complete, move to next
       target.textContent += "\n";
       lineIndex++;
       charIndex = 0;
-      setTimeout(tick, 220);
-      return;
+      setTimeout(tick, lineDelay);
     }
-    setTimeout(tick, speed);
   }
-  tick();
+  
+  // Small initial delay before starting
+  setTimeout(tick, 400);
 })();
