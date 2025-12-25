@@ -133,49 +133,69 @@
         this.field.classList.remove('waiting');
         resolve();
       });
+    },
+
+    clear: function() {
+      return new Promise((resolve, reject) => {
+        // Remove all content except the input field wrapper
+        while (this.screen.firstChild && this.screen.firstChild !== this.fieldwrap) {
+          this.screen.removeChild(this.screen.firstChild);
+        }
+        this.field.innerHTML = '';
+        this.field.classList.remove('waiting');
+        resolve();
+      });
     }
   };
 
   // Initialize terminal emulator
   var TE = TerminalEmulator.init(terminalElement);
 
-  // Execute terminal animation sequence
-  TE.wait(1000, false)
-    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service'))
-    .then(TE.enterCommand.bind(TE))
-    .then(TE.enterResponse.bind(TE, '[ ok ] SOC as a Service initializing...'))
-    .then(TE.wait.bind(TE, 1500))
-    .then(TE.enterResponse.bind(TE, '[ ok ] Loading security frameworks'))
-    .then(TE.wait.bind(TE, 600))
-    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NSM Grunnprinsipper'))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NIS2 Directive'))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;└─ ISO/IEC 27001'))
-    .then(TE.wait.bind(TE, 800))
-    .then(TE.enterResponse.bind(TE, '[ ok ] Compliance modules loaded'))
-    .then(TE.wait.bind(TE, 1200, false))
-    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ start-monitoring --24x7'))
-    .then(TE.enterCommand.bind(TE))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, 'Starting security operations center...'))
-    .then(TE.wait.bind(TE, 1800))
-    .then(TE.enterResponse.bind(TE, '[ ok ] SIEM integration active'))
-    .then(TE.wait.bind(TE, 600))
-    .then(TE.enterResponse.bind(TE, '[ ok ] EDR monitoring enabled'))
-    .then(TE.wait.bind(TE, 600))
-    .then(TE.enterResponse.bind(TE, '[ ok ] Threat detection online'))
-    .then(TE.wait.bind(TE, 1200, false))
-    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ status'))
-    .then(TE.enterCommand.bind(TE))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> System Status: <span style="color:#64ffda">OPERATIONAL</span>'))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> 24/7 Monitoring: <span style="color:#64ffda">ACTIVE</span>'))
-    .then(TE.wait.bind(TE, 400))
-    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> Incident Response: <span style="color:#64ffda">READY</span>'))
-    .then(TE.wait.bind(TE, 1000))
-    .then(TE.enterResponse.bind(TE, ''))
-    .then(TE.enterResponse.bind(TE, 'Vi bygger motstandsdyktige virksomheter.'))
-    .then(TE.reset.bind(TE));
+  // Define the animation sequence as a function
+  function runTerminalAnimation() {
+    return TE.wait(1000, false)
+      .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service'))
+      .then(TE.enterCommand.bind(TE))
+      .then(TE.enterResponse.bind(TE, '[ ok ] SOC as a Service initializing...'))
+      .then(TE.wait.bind(TE, 1500))
+      .then(TE.enterResponse.bind(TE, '[ ok ] Loading security frameworks'))
+      .then(TE.wait.bind(TE, 600))
+      .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NSM Grunnprinsipper'))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NIS2 Directive'))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;└─ ISO/IEC 27001'))
+      .then(TE.wait.bind(TE, 800))
+      .then(TE.enterResponse.bind(TE, '[ ok ] Compliance modules loaded'))
+      .then(TE.wait.bind(TE, 1200, false))
+      .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ start-monitoring --24x7'))
+      .then(TE.enterCommand.bind(TE))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, 'Starting security operations center...'))
+      .then(TE.wait.bind(TE, 1800))
+      .then(TE.enterResponse.bind(TE, '[ ok ] SIEM integration active'))
+      .then(TE.wait.bind(TE, 600))
+      .then(TE.enterResponse.bind(TE, '[ ok ] EDR monitoring enabled'))
+      .then(TE.wait.bind(TE, 600))
+      .then(TE.enterResponse.bind(TE, '[ ok ] Threat detection online'))
+      .then(TE.wait.bind(TE, 1200, false))
+      .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ status'))
+      .then(TE.enterCommand.bind(TE))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> System Status: <span style="color:#64ffda">OPERATIONAL</span>'))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> 24/7 Monitoring: <span style="color:#64ffda">ACTIVE</span>'))
+      .then(TE.wait.bind(TE, 400))
+      .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> Incident Response: <span style="color:#64ffda">READY</span>'))
+      .then(TE.wait.bind(TE, 1000))
+      .then(TE.enterResponse.bind(TE, ''))
+      .then(TE.enterResponse.bind(TE, 'Vi bygger motstandsdyktige virksomheter.'))
+      .then(TE.reset.bind(TE))
+      .then(TE.wait.bind(TE, 3000, false)) // Pause before restarting
+      .then(TE.clear.bind(TE)) // Clear the screen
+      .then(() => runTerminalAnimation()); // Loop: restart the animation
+  }
+
+  // Start the animation loop
+  runTerminalAnimation();
 })();
