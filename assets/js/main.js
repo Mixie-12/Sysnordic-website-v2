@@ -151,9 +151,12 @@
   // Initialize terminal emulator
   var TE = TerminalEmulator.init(terminalElement);
 
+  // Animation configuration
+  var ANIMATION_PAUSE_DURATION = 3000; // Pause between animation loops (ms)
+
   // Define the animation sequence as a function
   function runTerminalAnimation() {
-    return TE.wait(1000, false)
+    TE.wait(1000, false)
       .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service'))
       .then(TE.enterCommand.bind(TE))
       .then(TE.enterResponse.bind(TE, '[ ok ] SOC as a Service initializing...'))
@@ -191,9 +194,12 @@
       .then(TE.enterResponse.bind(TE, ''))
       .then(TE.enterResponse.bind(TE, 'Vi bygger motstandsdyktige virksomheter.'))
       .then(TE.reset.bind(TE))
-      .then(TE.wait.bind(TE, 3000, false)) // Pause before restarting
-      .then(TE.clear.bind(TE)) // Clear the screen
-      .then(() => runTerminalAnimation()); // Loop: restart the animation
+      .then(TE.wait.bind(TE, ANIMATION_PAUSE_DURATION, false))
+      .then(TE.clear.bind(TE))
+      .then(() => {
+        // Use setTimeout to avoid stack overflow from recursive promises
+        setTimeout(runTerminalAnimation, 0);
+      });
   }
 
   // Start the animation loop
