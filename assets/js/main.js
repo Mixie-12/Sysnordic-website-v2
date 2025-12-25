@@ -100,7 +100,7 @@
         
         this.field.innerHTML = '';
         resolve();
-      })
+      });
     },
 
     enterResponse: function(response) {
@@ -111,7 +111,7 @@
         this.screen.insertBefore(resp, this.fieldwrap);
         
         resolve();
-      })
+      });
     },
     
     wait: function(time, busy) {
