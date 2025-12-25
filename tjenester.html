@@ -1,0 +1,203 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#05060a" />
+  <title>Sysnordic — Tjenester</title>
+  <meta name="description" content="Sysnordic leverer SOC as a Service: overvåking, incident response, digital etterforskning og compliance for norske virksomheter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div id="bg-grid" aria-hidden="true"></div>
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-xxl py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>SYSNORDIC</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Åpne meny">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link " href="index.html">Hjem</a></li>
+          <li class="nav-item"><a class="nav-link active" href="tjenester.html">Tjenester</a></li>
+          <li class="nav-item"><a class="nav-link " href="compliance.html">Compliance</a></li>
+          <li class="nav-item"><a class="nav-link " href="om-oss.html">Om oss</a></li>
+          <li class="nav-item"><a class="nav-link " href="kontakt.html">Kontakt</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-glow" href="kontakt.html#demo">Book en demo</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-xxl" style="position:relative; z-index:1;">
+    
+<section class="section">
+  <div class="row g-4 align-items-end">
+    <div class="col-lg-8 reveal">
+      <div class="badge-pill mono mb-3"><span style="color:var(--accent)">●</span> Tjenester</div>
+      <h1 class="display-6 fw-bold">Alt du trenger for drift, respons og dokumentert sikkerhet.</h1>
+      <p class="lead mt-3">
+        Sysnordic tilbyr en helhetlig portefølje for sikkerhetsoperasjoner og etterlevelse — levert med tydelig ansvar,
+        klare SLA-er og målbar verdi.
+      </p>
+    </div>
+    <div class="col-lg-4 reveal">
+      <div class="glass p-3 p-lg-4">
+        <div class="fw-semibold">Inkludert i leveransen</div>
+        <div class="small-muted mono mt-1">Runbooks • eskalering • rapport • kontrollmapping</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-3">
+    <div class="col-lg-6 reveal" id="soc">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4">SOC as a Service</h2>
+        <p class="small-muted">
+          24/7 overvåking og deteksjon med strukturert triage, eskalering og kontinuerlig forbedring.
+          Vi tilpasser datakilder, use-cases og playbooks til virksomhetens risiko og drift.
+        </p>
+        <ul class="small-muted">
+          <li>Integrasjon av loggkilder (sky, on-prem, identitet, nettverk, endepunkter)</li>
+          <li>Deteksjonsregler og use-case bibliotek</li>
+          <li>Threat hunting og proaktiv forbedring</li>
+          <li>Rapportering, KPI-er og ledelsesoversikt</li>
+        </ul>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge-pill mono">SIEM</span>
+          <span class="badge-pill mono">SOAR</span>
+          <span class="badge-pill mono">EDR</span>
+          <span class="badge-pill mono">Cloud</span>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal" id="ir">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4">Incident Response</h2>
+        <p class="small-muted">
+          Når det haster: vi hjelper dere å avgrense, rydde opp og gjenopprette — med sporbarhet og læring.
+        </p>
+        <ul class="small-muted">
+          <li>Beredskap og responsplan (roller, eskalering, kommunikasjonsløp)</li>
+          <li>Hendelseshåndtering: avgrensning, eradikering, gjenoppretting</li>
+          <li>Post-incident review og forbedringsplan</li>
+          <li>Øvelser (table-top) og modenhetsløft</li>
+        </ul>
+        <div class="glass-soft p-3 mt-3 mono small">
+          Tips: Kombiner IR med SOC for raskere deteksjon og bedre beslutningsgrunnlag.
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal" id="forensics">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4">Digital etterforskning (Forensics)</h2>
+        <p class="small-muted">
+          Strukturert innsamling og analyse for å forstå hva som skjedde — og dokumentere det som kan dokumenteres.
+        </p>
+        <ul class="small-muted">
+          <li>Bevisinnsamling og sikring av beviskjede (chain of custody)</li>
+          <li>Tidslinjer, artefaktanalyse og årsaksforståelse</li>
+          <li>Støtte til intern/ekstern rapportering</li>
+          <li>Råd om logging og sporbarhet for fremtidige hendelser</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal" id="styring">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4">Rådgivning, styring og sikkerhetsprogram</h2>
+        <p class="small-muted">
+          Fra «krav på papir» til tiltak i drift: vi oversetter rammeverk til praktiske kontroller.
+        </p>
+        <ul class="small-muted">
+          <li>Risikovurderinger og kontrollmapping</li>
+          <li>Policy/standarder, prosedyrer og evidens</li>
+          <li>Leverandør- og tredjepartsoppfølging</li>
+          <li>Modenhetsmåling og prioriteringsplan</li>
+        </ul>
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge-pill mono">NSM</span>
+          <span class="badge-pill mono">NIS2</span>
+          <span class="badge-pill mono">ISO/IEC 27001</span>
+          <span class="badge-pill mono">Personvern (ved behov)</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section class="section-sm">
+    <div class="glass p-4 p-lg-5 reveal">
+      <div class="row g-4 align-items-center">
+        <div class="col-lg-8">
+          <h2 class="h4 mb-2">Pakker som passer modenhet</h2>
+          <p class="small-muted mb-0">
+            Start enkelt og bygg videre. Vi kan levere som fast tjeneste, prosjekt, eller kombinasjon.
+          </p>
+        </div>
+        <div class="col-lg-4 d-flex justify-content-lg-end gap-2 flex-wrap">
+          <a class="btn btn-glow" href="kontakt.html#demo">Få et forslag</a>
+          <a class="btn btn-outline-ice" href="compliance.html">Se rammeverk</a>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container-xxl">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <div>
+              <div class="fw-bold">Sysnordic</div>
+              <div class="small-muted mono">Oslo, Norge • SOC as a Service</div>
+            </div>
+          </div>
+          <p class="small-muted mb-0">
+            Moderne sikkerhetsoperasjoner med transparent leveranse, målbar effekt og støtte til regulatoriske krav.
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <div class="fw-semibold mb-2">Tjenester</div>
+          <div class="small-muted">
+            Overvåking • Incident Response • Digital etterforskning • Risiko & compliance • Sikkerhetsrådgivning
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="fw-semibold mb-2">Kontakt</div>
+          <div class="small-muted">
+            <div>📍 Oslo</div>
+            <div>✉️ kontakt@sysnordic.no</div>
+            <div>☎️ +47 00 00 00 00</div>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-soft">
+      <div class="d-flex flex-wrap justify-content-between gap-2 small-muted">
+        <div>© 2025 Sysnordic. Alle rettigheter reservert.</div>
+        <div class="mono">Built with Bootstrap • Glass/CRT UI</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,355 @@
+<!doctype html>
+<html lang="no">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="theme-color" content="#05060a" />
+  <title>Sysnordic — SOC as a Service i Oslo</title>
+  <meta name="description" content="Sysnordic leverer SOC as a Service: overvåking, incident response, digital etterforskning og compliance for norske virksomheter." />
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Share+Tech+Mono&family=Space+Grotesk:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="assets/css/styles.css" rel="stylesheet">
+</head>
+<body>
+  <div id="bg-grid" aria-hidden="true"></div>
+  <div class="crt-overlay" aria-hidden="true"></div>
+  <div class="noise" aria-hidden="true"></div>
+
+  <nav class="navbar navbar-expand-lg navbar-dark fixed-top">
+    <div class="container-xxl py-2">
+      <a class="navbar-brand d-flex align-items-center gap-2" href="index.html">
+        <span class="brand-mark" aria-hidden="true"></span>
+        <span>SYSNORDIC</span>
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMain" aria-controls="navMain" aria-expanded="false" aria-label="Åpne meny">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navMain">
+        <ul class="navbar-nav ms-auto align-items-lg-center gap-lg-2">
+          <li class="nav-item"><a class="nav-link active" href="index.html">Hjem</a></li>
+          <li class="nav-item"><a class="nav-link " href="tjenester.html">Tjenester</a></li>
+          <li class="nav-item"><a class="nav-link " href="compliance.html">Compliance</a></li>
+          <li class="nav-item"><a class="nav-link " href="om-oss.html">Om oss</a></li>
+          <li class="nav-item"><a class="nav-link " href="kontakt.html">Kontakt</a></li>
+          <li class="nav-item ms-lg-2">
+            <a class="btn btn-glow" href="kontakt.html#demo">Book en demo</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+  <main class="container-xxl" style="position:relative; z-index:1;">
+    
+<section class="hero">
+  <div class="row g-4 align-items-center">
+    <div class="col-lg-6 reveal">
+      <div class="badge-pill mono mb-3">
+        <span style="color:var(--accent)">●</span>
+        Oslo-basert SOC as a Service
+        <span class="text-secondary">•</span>
+        24/7 overvåking
+      </div>
+
+      <h1 class="display-5">
+        Sikkerhetsoperasjoner som
+        <span class="mono" style="color:var(--accent)">tjeneste</span>
+        — med compliance i bunn.
+      </h1>
+
+      <p class="lead mt-3">
+        Sysnordic leverer kontinuerlig overvåking, hendelseshåndtering, digital etterforskning og styringsstøtte
+        for virksomheter som må møte krav fra <span class="mono">NSM</span>, <span class="mono">NIS2</span>,
+        <span class="mono">ISO/IEC 27001</span> og andre rammeverk.
+      </p>
+
+      <div class="hero-cta mt-4">
+        <a class="btn btn-glow" href="kontakt.html#demo">Book demo</a>
+        <a class="btn btn-outline-ice" href="tjenester.html">Se tjenester</a>
+        <a class="btn btn-outline-ice" href="compliance.html">Compliance & rammeverk</a>
+      </div>
+
+      <div class="row g-3 mt-4">
+        <div class="col-md-6">
+          <div class="glass-soft kpi">
+            <span class="dot"></span>
+            <div>
+              <div class="fw-semibold">Rask deteksjon</div>
+              <div class="small-muted">Kontekst, triage og prioritering — uten støy.</div>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="glass-soft kpi">
+            <span class="dot" style="background:rgba(122,167,255,.95); box-shadow:0 0 20px rgba(122,167,255,.5)"></span>
+            <div>
+              <div class="fw-semibold">Målbar leveranse</div>
+              <div class="small-muted">Rapporter, KPI-er og dokumentasjon som tåler revisjon.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal">
+      <div class="terminal">
+        <div class="bar">
+          <span class="dot-red"></span><span class="dot-yellow"></span><span class="dot-green"></span>
+          <span class="ms-2 small-muted mono">sysnordic://security-ops</span>
+        </div>
+        <pre class="mono"><code id="terminalText"></code><span class="cursor" aria-hidden="true"></span></pre>
+      </div>
+
+      <div class="d-flex flex-wrap gap-2 mt-3 justify-content-end">
+        <span class="badge-pill mono">SIEM/SOAR</span>
+        <span class="badge-pill mono">EDR</span>
+        <span class="badge-pill mono">Cloud</span>
+        <span class="badge-pill mono">OT/ICS (ved behov)</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="glass p-4 p-lg-5 reveal">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-7">
+        <h2 class="h3 mb-2">Fra «hacker-vibe» til enterprise — uten å miste presisjon.</h2>
+        <p class="small-muted mb-0">
+          Vi kombinerer moderne sikkerhetsmetodikk med tydelig dokumentasjon og forankring i lov- og rammeverkskrav.
+          Resultatet er en leveranse som både sikkerhetsteam og ledelse kan bruke.
+        </p>
+      </div>
+      <div class="col-lg-5">
+        <div class="d-grid gap-2">
+          <a class="btn btn-glow" href="tjenester.html#soc">SOC as a Service</a>
+          <a class="btn btn-outline-ice" href="tjenester.html#ir">Incident Response</a>
+          <a class="btn btn-outline-ice" href="tjenester.html#forensics">Digital etterforskning</a>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section" id="kjerne">
+  <div class="row g-4">
+    <div class="col-lg-4 reveal">
+      <div class="glass feature-card">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="card-icon">🛰️</div>
+          <div>
+            <div class="fw-semibold">Overvåking & deteksjon</div>
+            <div class="small-muted mono">24/7 • triage • hunting</div>
+          </div>
+        </div>
+        <p class="small-muted mb-0">
+          Kontinuerlig overvåking med tydelig prioritering. Vi skiller signal fra støy og gir konkrete anbefalinger.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-4 reveal">
+      <div class="glass feature-card">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="card-icon">🧯</div>
+          <div>
+            <div class="fw-semibold">Hendelseshåndtering</div>
+            <div class="small-muted mono">IR • beredskap • runbooks</div>
+          </div>
+        </div>
+        <p class="small-muted mb-0">
+          Fra første varsling til gjenoppretting: avgrensning, eradikering, læring og forbedring av beredskap.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-4 reveal">
+      <div class="glass feature-card">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="card-icon">🔎</div>
+          <div>
+            <div class="fw-semibold">Digital forensics</div>
+            <div class="small-muted mono">beviskjede • analyse • rapport</div>
+          </div>
+        </div>
+        <p class="small-muted mb-0">
+          Strukturert innsamling og analyse med fokus på sporbarhet og dokumentasjon — relevant for revisjon og sak.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="row g-4 mt-1">
+    <div class="col-lg-6 reveal">
+      <div class="glass feature-card">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="card-icon">📜</div>
+          <div>
+            <div class="fw-semibold">Compliance & styring</div>
+            <div class="small-muted mono">NSM • NIS2 • ISO 27001</div>
+          </div>
+        </div>
+        <p class="small-muted mb-0">
+          Vi kobler sikkerhetstiltak til krav og kontrollmål, og leverer sporbar dokumentasjon som støtter revisjon.
+        </p>
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal">
+      <div class="glass feature-card">
+        <div class="d-flex align-items-center gap-3 mb-2">
+          <div class="card-icon">🧩</div>
+          <div>
+            <div class="fw-semibold">Integrasjon & forbedring</div>
+            <div class="small-muted mono">SIEM • SOAR • EDR • sky</div>
+          </div>
+        </div>
+        <p class="small-muted mb-0">
+          Vi møter dere der dere er: verktøy, logger og prosesser — og bygger stegvis modenhet uten å bremse drift.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="row g-4 align-items-stretch">
+    <div class="col-lg-6 reveal">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4 mb-2">Hvordan leveransen fungerer</h2>
+        <p class="small-muted">
+          Standardisert, men tilpasset: vi etablerer grunnmur, kobler på datakilder, og setter opp playbooks.
+          Deretter jobber vi kontinuerlig med forbedring og rapportering.
+        </p>
+
+        <div class="timeline mono small">
+          <div class="t-item">
+            <div class="fw-semibold">01 — Onboarding</div>
+            <div class="small-muted">Tilgang, logging, datakilder, avklarte roller og eskaleringsløp.</div>
+          </div>
+          <div class="t-item">
+            <div class="fw-semibold">02 — Deteksjon & respons</div>
+            <div class="small-muted">Regler, triage, IR-runbooks og hendelseshåndtering.</div>
+          </div>
+          <div class="t-item">
+            <div class="fw-semibold">03 — Compliance & rapportering</div>
+            <div class="small-muted">Kontroller, evidens, KPI-er, revisjonsklar dokumentasjon.</div>
+          </div>
+          <div class="t-item">
+            <div class="fw-semibold">04 — Kontinuerlig forbedring</div>
+            <div class="small-muted">Threat hunting, læring etter hendelser, hardening og modenhet.</div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="col-lg-6 reveal">
+      <div class="glass p-4 p-lg-5 h-100">
+        <h2 class="h4 mb-2">Typiske leveranseområder</h2>
+        <p class="small-muted">
+          Vi dekker både operativt og styringsmessig behov — fra «få kontroll på loggene» til revisjonsmodenhet.
+        </p>
+
+        <div class="row g-3">
+          <div class="col-md-6">
+            <div class="glass-soft p-3 h-100">
+              <div class="fw-semibold">Ledelsesrapportering</div>
+              <div class="small-muted">Risiko, trender, hendelser og tiltak.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="glass-soft p-3 h-100">
+              <div class="fw-semibold">Beredskap</div>
+              <div class="small-muted">Roller, øvelser, runbooks og responsplaner.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="glass-soft p-3 h-100">
+              <div class="fw-semibold">Teknisk sikkerhet</div>
+              <div class="small-muted">EDR, SIEM, logging, hardening.</div>
+            </div>
+          </div>
+          <div class="col-md-6">
+            <div class="glass-soft p-3 h-100">
+              <div class="fw-semibold">Revisjonsstøtte</div>
+              <div class="small-muted">Evidens og kontrollmapping.</div>
+            </div>
+          </div>
+        </div>
+
+        <hr class="hr-soft">
+        <div class="d-flex flex-wrap gap-2">
+          <span class="badge-pill mono">Dataminimering</span>
+          <span class="badge-pill mono">Sporbarhet</span>
+          <span class="badge-pill mono">Zero Trust</span>
+          <span class="badge-pill mono">Least privilege</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section-sm">
+  <div class="glass p-4 p-lg-5 reveal">
+    <div class="row g-4 align-items-center">
+      <div class="col-lg-7">
+        <h2 class="h4 mb-2">Klar for en moden SOC-leveranse?</h2>
+        <p class="small-muted mb-0">
+          Vi starter gjerne med en kort avklaring (30 min) og skisserer anbefalt leveranse, datakilder og forventet effekt.
+        </p>
+      </div>
+      <div class="col-lg-5 d-flex justify-content-lg-end gap-2 flex-wrap">
+        <a class="btn btn-glow" href="kontakt.html#demo">Book demo</a>
+        <a class="btn btn-outline-ice" href="kontakt.html">Kontakt oss</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+  </main>
+
+  <footer class="footer mt-5">
+    <div class="container-xxl">
+      <div class="row g-4 align-items-start">
+        <div class="col-lg-5">
+          <div class="d-flex align-items-center gap-2 mb-2">
+            <span class="brand-mark" aria-hidden="true"></span>
+            <div>
+              <div class="fw-bold">Sysnordic</div>
+              <div class="small-muted mono">Oslo, Norge • SOC as a Service</div>
+            </div>
+          </div>
+          <p class="small-muted mb-0">
+            Moderne sikkerhetsoperasjoner med transparent leveranse, målbar effekt og støtte til regulatoriske krav.
+          </p>
+        </div>
+        <div class="col-lg-4">
+          <div class="fw-semibold mb-2">Tjenester</div>
+          <div class="small-muted">
+            Overvåking • Incident Response • Digital etterforskning • Risiko & compliance • Sikkerhetsrådgivning
+          </div>
+        </div>
+        <div class="col-lg-3">
+          <div class="fw-semibold mb-2">Kontakt</div>
+          <div class="small-muted">
+            <div>📍 Oslo</div>
+            <div>✉️ kontakt@sysnordic.no</div>
+            <div>☎️ +47 00 00 00 00</div>
+          </div>
+        </div>
+      </div>
+      <hr class="hr-soft">
+      <div class="d-flex flex-wrap justify-content-between gap-2 small-muted">
+        <div>© 2025 Sysnordic. Alle rettigheter reservert.</div>
+        <div class="mono">Built with Bootstrap • Glass/CRT UI</div>
+      </div>
+    </div>
+  </footer>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="assets/js/main.js"></script>
+</body>
+</html>
