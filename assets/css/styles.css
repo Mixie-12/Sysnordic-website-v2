@@ -403,6 +403,38 @@ a:hover{ color: var(--accent); }
   50% { opacity: 0; } 
 }
 
+/* Terminal Emulator Styles */
+.terminal_emulator__command {
+  color: rgba(100,255,218,.95);
+  margin-bottom: 0.3rem;
+  text-shadow: 
+    0 0 5px rgba(100,255,218,.4),
+    0 0 10px rgba(100,255,218,.2);
+}
+
+.terminal_emulator__response {
+  color: rgba(233,238,252,.75);
+  margin-bottom: 0.25rem;
+  padding-left: 0;
+}
+
+.terminal_emulator__field {
+  display: inline-block;
+  color: rgba(100,255,218,.95);
+  min-height: 1.2em;
+  text-shadow: 
+    0 0 5px rgba(100,255,218,.4),
+    0 0 10px rgba(100,255,218,.2);
+}
+
+.terminal_emulator__field.waiting::after {
+  content: '█';
+  display: inline-block;
+  margin-left: 4px;
+  animation: blink 0.8s steps(1,end) infinite;
+  color: rgba(100,255,218,.9);
+}
+
 .card-icon{
   width: 46px; height: 46px;
   border-radius: 16px;

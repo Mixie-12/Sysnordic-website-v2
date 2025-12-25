@@ -27,70 +27,155 @@
   }, {threshold: 0.18});
   document.querySelectorAll(".reveal").forEach(el=>io.observe(el));
 
-  // Enhanced Terminal typing with realistic delays
-  const target = document.getElementById("terminalText");
-  if(!target) return;
+  // Dynamic Terminal Emulator
+  const terminalElement = document.getElementById("terminalText");
+  if(!terminalElement) return;
 
-  const lines = [
-    "sysnordic@oslo:~$ init --soc-as-a-service",
-    "[ ok ] 24/7 overvåking • deteksjon • respons",
-    "[ ok ] Incident Response & beredskap",
-    "[ ok ] Digital etterforskning / forensics",
-    "[ ok ] Compliance: NSM • NIS2 • ISO/IEC 27001",
-    "",
-    "Status: KLAR — vi bygger motstandsdyktige virksomheter."
-  ];
-
+  // If user prefers reduced motion, show static content
   if(prefersReduced){
-    target.textContent = lines.join("\n");
+    terminalElement.innerHTML = 
+      '<div class="terminal_emulator__command">sysnordic@oslo:~$ init --soc-service</div>' +
+      '<div class="terminal_emulator__response">[ ok ] SOC as a Service initialized</div>' +
+      '<div class="terminal_emulator__response">[ ok ] 24/7 monitoring active</div>' +
+      '<div class="terminal_emulator__response">[ ok ] Compliance frameworks loaded</div>';
     return;
   }
 
-  let lineIndex = 0, charIndex = 0;
-  const minSpeed = 25;  // ms - minimum typing speed
-  const maxSpeed = 65;  // ms - maximum typing speed
-  const lineDelay = 180; // ms - delay between lines
+  var TerminalEmulator = {
+    init: function(screen) {
+      var inst = Object.create(this);
+      inst.screen = screen;
+      inst.createInput();
+      return inst;
+    },
 
-  // Random typing speed for more realistic feel
-  function getRandomSpeed() {
-    return Math.floor(Math.random() * (maxSpeed - minSpeed + 1)) + minSpeed;
-  }
-
-  // Simulate occasional pauses (like thinking)
-  function shouldPause() {
-    return Math.random() < 0.08; // 8% chance of pause
-  }
-
-  function tick(){
-    if(lineIndex >= lines.length) {
-      // Terminal complete - could add a completion callback here
-      return;
-    }
-    
-    const line = lines[lineIndex];
-    
-    if(charIndex === 0 && lineIndex > 0) {
-      // Small delay before starting a new line
-      setTimeout(tick, lineDelay);
-      return;
-    }
-    
-    if(charIndex < line.length) {
-      target.textContent += line.charAt(charIndex);
-      charIndex++;
+    createInput: function() {
+      var inputField = document.createElement('div');
+      var inputWrap = document.createElement('div');
       
-      // Occasional pause for realism
-      const delay = shouldPause() ? 200 : getRandomSpeed();
-      setTimeout(tick, delay);
-    } else {
-      // Line complete, move to next
-      target.textContent += "\n";
-      lineIndex++;
-      charIndex = 0;
-      setTimeout(tick, lineDelay);
+      inputField.className = 'terminal_emulator__field';
+      inputField.innerHTML = '';
+      inputWrap.appendChild(inputField);
+      this.screen.appendChild(inputWrap);
+      this.field = inputField;
+      this.fieldwrap = inputWrap;
+    },
+
+    enterInput: function(input) {
+      return new Promise((resolve, reject) => {
+        var randomSpeed = (max, min) => { 
+          return Math.random() * (max - min) + min; 
+        }
+        
+        var speed = randomSpeed(70, 90);
+        var i = 0;
+        var str = '';
+        var type = () => {
+          str = str + input[i];
+          this.field.innerHTML = str.replace(/ /g, '&nbsp;');
+          i++;
+          
+          setTimeout(() => {
+            if(i < input.length){
+              if(i % 5 === 0) speed = randomSpeed(80, 120);
+              type();
+            } else {
+              setTimeout(() => {
+                resolve();
+              }, 400);
+            } 
+          }, speed);
+        };
+        
+        type();
+      });
+    },
+    
+    enterCommand: function() {
+      return new Promise((resolve, reject) => {
+        var resp = document.createElement('div');
+        resp.className = 'terminal_emulator__command';
+        resp.innerHTML = this.field.innerHTML;
+        this.screen.insertBefore(resp, this.fieldwrap);
+        
+        this.field.innerHTML = '';
+        resolve();
+      })
+    },
+
+    enterResponse: function(response) {
+      return new Promise((resolve, reject) => {
+        var resp = document.createElement('div');
+        resp.className = 'terminal_emulator__response';
+        resp.innerHTML = response;
+        this.screen.insertBefore(resp, this.fieldwrap);
+        
+        resolve();
+      })
+    },
+    
+    wait: function(time, busy) {
+      busy = (busy === undefined) ? true : busy;
+      return new Promise((resolve, reject) => {
+        if (busy){
+          this.field.classList.add('waiting');
+        } else {
+          this.field.classList.remove('waiting');
+        }
+        setTimeout(() => {
+          resolve();
+        }, time);
+      });
+    },
+    
+    reset: function() {
+      return new Promise((resolve, reject) => {
+        this.field.classList.remove('waiting');
+        resolve();
+      });
     }
-  }
-  
-  // Small initial delay before starting
-  setTimeout(tick, 400);
+  };
+
+  // Initialize terminal emulator
+  var TE = TerminalEmulator.init(terminalElement);
+
+  // Execute terminal animation sequence
+  TE.wait(1000, false)
+    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service'))
+    .then(TE.enterCommand.bind(TE))
+    .then(TE.enterResponse.bind(TE, '[ ok ] SOC as a Service initializing...'))
+    .then(TE.wait.bind(TE, 1500))
+    .then(TE.enterResponse.bind(TE, '[ ok ] Loading security frameworks'))
+    .then(TE.wait.bind(TE, 600))
+    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NSM Grunnprinsipper'))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NIS2 Directive'))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;└─ ISO/IEC 27001'))
+    .then(TE.wait.bind(TE, 800))
+    .then(TE.enterResponse.bind(TE, '[ ok ] Compliance modules loaded'))
+    .then(TE.wait.bind(TE, 1200, false))
+    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ start-monitoring --24x7'))
+    .then(TE.enterCommand.bind(TE))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, 'Starting security operations center...'))
+    .then(TE.wait.bind(TE, 1800))
+    .then(TE.enterResponse.bind(TE, '[ ok ] SIEM integration active'))
+    .then(TE.wait.bind(TE, 600))
+    .then(TE.enterResponse.bind(TE, '[ ok ] EDR monitoring enabled'))
+    .then(TE.wait.bind(TE, 600))
+    .then(TE.enterResponse.bind(TE, '[ ok ] Threat detection online'))
+    .then(TE.wait.bind(TE, 1200, false))
+    .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ status'))
+    .then(TE.enterCommand.bind(TE))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> System Status: <span style="color:#64ffda">OPERATIONAL</span>'))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> 24/7 Monitoring: <span style="color:#64ffda">ACTIVE</span>'))
+    .then(TE.wait.bind(TE, 400))
+    .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> Incident Response: <span style="color:#64ffda">READY</span>'))
+    .then(TE.wait.bind(TE, 1000))
+    .then(TE.enterResponse.bind(TE, ''))
+    .then(TE.enterResponse.bind(TE, 'Vi bygger motstandsdyktige virksomheter.'))
+    .then(TE.reset.bind(TE));
 })();
