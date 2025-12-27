@@ -388,6 +388,23 @@ a:hover{ color: var(--accent); }
   text-shadow: 
     0 0 5px rgba(100,255,218,.4),
     0 0 10px rgba(100,255,218,.2);
+  /* Fixed height to prevent layout shift during typing animation */
+  height: 320px;
+  overflow-y: auto;
+}
+
+/* Responsive terminal height for smaller screens (Bootstrap lg breakpoint) */
+@media (max-width: 992px) {
+  .terminal pre {
+    height: 280px;
+  }
+}
+
+/* Bootstrap sm breakpoint */
+@media (max-width: 576px) {
+  .terminal pre {
+    height: 260px;
+  }
 }
 .cursor{
   display:inline-block;
