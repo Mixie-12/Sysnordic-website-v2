@@ -301,6 +301,12 @@ a:hover{ color: var(--accent); }
   letter-spacing: -.02em;
   line-height: 1.02;
 }
+.hero .hero-title {
+  font-family: "Orbitron", "Space Grotesk", system-ui, sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  text-transform: none;
+}
 .hero .lead{ color: var(--muted); }
 .hero-cta{ display:flex; gap:.75rem; flex-wrap:wrap; }
 
@@ -390,7 +396,7 @@ a:hover{ color: var(--accent); }
     0 0 10px rgba(100,255,218,.2);
   /* Fixed height to prevent layout shift during typing animation */
   height: 320px;
-  overflow-y: auto;
+  overflow-y: hidden;
 }
 
 /* Responsive terminal height for smaller screens (Bootstrap lg breakpoint) */

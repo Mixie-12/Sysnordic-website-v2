@@ -69,34 +69,101 @@
         this.fieldwrap = inputWrap;
       },
 
-      enterInput: function(input) {
+      enterInput: function(input, skipPrompt) {
         var self = this;
         return new Promise(function(resolve, reject) {
-          var randomSpeed = function(max, min) { 
-            return Math.random() * (max - min) + min; 
-          };
-          
-          var speed = randomSpeed(70, 90);
-          var i = 0;
-          var str = '';
-          var type = function() {
-            str = str + input[i];
-            self.field.innerHTML = str.replace(/ /g, '&nbsp;');
-            i++;
-            
-            setTimeout(function() {
-              if(i < input.length){
-                if(i % 5 === 0) speed = randomSpeed(80, 120);
-                type();
-              } else {
+          if (skipPrompt) {
+            // Skip the prompt part and only type the command
+            var promptEnd = input.indexOf('$ ');
+            if (promptEnd !== -1) {
+              var prompt = input.substring(0, promptEnd + 2);
+              var command = input.substring(promptEnd + 2);
+              
+              // Set prompt immediately
+              self.field.innerHTML = prompt;
+              
+              // Type only the command part
+              var randomSpeed = function(max, min) { 
+                return Math.random() * (max - min) + min; 
+              };
+              
+              var speed = randomSpeed(70, 90);
+              var i = 0;
+              var str = prompt;
+              var type = function() {
+                str = str + command[i];
+                self.field.innerHTML = str.replace(/ /g, '&nbsp;');
+                i++;
+                
                 setTimeout(function() {
-                  resolve();
-                }, 400);
-              } 
-            }, speed);
-          };
-          
-          type();
+                  if(i < command.length){
+                    if(i % 5 === 0) speed = randomSpeed(80, 120);
+                    type();
+                  } else {
+                    setTimeout(function() {
+                      resolve();
+                    }, 400);
+                  } 
+                }, speed);
+              };
+              
+              type();
+            } else {
+              // No prompt found, type everything
+              var randomSpeed = function(max, min) { 
+                return Math.random() * (max - min) + min; 
+              };
+              
+              var speed = randomSpeed(70, 90);
+              var i = 0;
+              var str = '';
+              var type = function() {
+                str = str + input[i];
+                self.field.innerHTML = str.replace(/ /g, '&nbsp;');
+                i++;
+                
+                setTimeout(function() {
+                  if(i < input.length){
+                    if(i % 5 === 0) speed = randomSpeed(80, 120);
+                    type();
+                  } else {
+                    setTimeout(function() {
+                      resolve();
+                    }, 400);
+                  } 
+                }, speed);
+              };
+              
+              type();
+            }
+          } else {
+            // Original behavior - type everything
+            var randomSpeed = function(max, min) { 
+              return Math.random() * (max - min) + min; 
+            };
+            
+            var speed = randomSpeed(70, 90);
+            var i = 0;
+            var str = '';
+            var type = function() {
+              str = str + input[i];
+              self.field.innerHTML = str.replace(/ /g, '&nbsp;');
+              i++;
+              
+              setTimeout(function() {
+                if(i < input.length){
+                  if(i % 5 === 0) speed = randomSpeed(80, 120);
+                  type();
+                } else {
+                  setTimeout(function() {
+                    resolve();
+                  }, 400);
+                } 
+              }, speed);
+            };
+            
+            type();
+          }
         });
       },
       
@@ -166,50 +233,54 @@
     var TE = TerminalEmulator.init(terminalElement);
 
     // Animation configuration
-    var ANIMATION_PAUSE_DURATION = 3000; // Pause between animation loops (ms)
+    var ANIMATION_PAUSE_DURATION = 2500; // Pause between animation loops (ms)
 
     // Define the animation sequence as a function
     function runTerminalAnimation() {
-      TE.wait(1000, false)
-        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service'))
+      TE.wait(800, false)
+        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ init --soc-service', true))
         .then(TE.enterCommand.bind(TE))
         .then(TE.enterResponse.bind(TE, '[ ok ] SOC as a Service initializing...'))
-        .then(TE.wait.bind(TE, 1500))
+        .then(TE.wait.bind(TE, 1200))
         .then(TE.enterResponse.bind(TE, '[ ok ] Loading security frameworks'))
-        .then(TE.wait.bind(TE, 600))
+        .then(TE.wait.bind(TE, 500))
         .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NSM Grunnprinsipper'))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 350))
         .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;├─ NIS2 Directive'))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 350))
         .then(TE.enterResponse.bind(TE, '&nbsp;&nbsp;&nbsp;&nbsp;└─ ISO/IEC 27001'))
-        .then(TE.wait.bind(TE, 800))
+        .then(TE.wait.bind(TE, 700))
         .then(TE.enterResponse.bind(TE, '[ ok ] Compliance modules loaded'))
-        .then(TE.wait.bind(TE, 1200, false))
-        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ start-monitoring --24x7'))
+        .then(TE.wait.bind(TE, 1000, false))
+        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ start-monitoring --24x7', true))
         .then(TE.enterCommand.bind(TE))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 300))
         .then(TE.enterResponse.bind(TE, 'Starting security operations center...'))
-        .then(TE.wait.bind(TE, 1800))
+        .then(TE.wait.bind(TE, 1500))
         .then(TE.enterResponse.bind(TE, '[ ok ] SIEM integration active'))
-        .then(TE.wait.bind(TE, 600))
+        .then(TE.wait.bind(TE, 500))
         .then(TE.enterResponse.bind(TE, '[ ok ] EDR monitoring enabled'))
-        .then(TE.wait.bind(TE, 600))
+        .then(TE.wait.bind(TE, 500))
         .then(TE.enterResponse.bind(TE, '[ ok ] Threat detection online'))
-        .then(TE.wait.bind(TE, 1200, false))
-        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ status'))
+        .then(TE.wait.bind(TE, 1000, false))
+        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ status', true))
         .then(TE.enterCommand.bind(TE))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 300))
         .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> System Status: <span style="color:#64ffda">OPERATIONAL</span>'))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 350))
         .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> 24/7 Monitoring: <span style="color:#64ffda">ACTIVE</span>'))
-        .then(TE.wait.bind(TE, 400))
+        .then(TE.wait.bind(TE, 350))
         .then(TE.enterResponse.bind(TE, '<span style="color:var(--accent)">●</span> Incident Response: <span style="color:#64ffda">READY</span>'))
-        .then(TE.wait.bind(TE, 1000))
+        .then(TE.wait.bind(TE, 800))
         .then(TE.enterResponse.bind(TE, ''))
         .then(TE.enterResponse.bind(TE, 'Vi bygger motstandsdyktige virksomheter.'))
         .then(TE.reset.bind(TE))
         .then(TE.wait.bind(TE, ANIMATION_PAUSE_DURATION, false))
+        .then(TE.enterInput.bind(TE, 'sysnordic@oslo:~$ clear', true))
+        .then(TE.enterCommand.bind(TE))
+        .then(TE.wait.bind(TE, 400))
         .then(TE.clear.bind(TE))
+        .then(TE.wait.bind(TE, 300, false))
         .then(function() {
           // Use setTimeout to avoid stack overflow from recursive promises
           setTimeout(runTerminalAnimation, 0);
