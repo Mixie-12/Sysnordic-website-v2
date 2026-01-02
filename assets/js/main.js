@@ -248,10 +248,10 @@
       
       scrollToBottom: function() {
         var self = this;
-        // Smooth scroll to the bottom to follow output like a real terminal
+        // Auto-scroll to the bottom to follow output like a real terminal
+        // Smooth scrolling behavior is handled by CSS scroll-behavior property
         var container = self.screen.parentElement;
         if (container) {
-          // Use smooth scrolling for better UX
           container.scrollTop = container.scrollHeight;
         }
       }
