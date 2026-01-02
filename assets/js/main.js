@@ -69,6 +69,13 @@
         this.fieldwrap = inputWrap;
       },
 
+      /**
+       * Types input text into the terminal field
+       * @param {string} input - The full text to type (including prompt if present)
+       * @param {boolean} skipPrompt - If true, instantly displays the prompt part (before '$ ') 
+       *                                and only types the command. This simulates realistic 
+       *                                terminal behavior where the prompt appears immediately.
+       */
       enterInput: function(input, skipPrompt) {
         var self = this;
         return new Promise(function(resolve, reject) {
