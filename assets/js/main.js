@@ -183,6 +183,10 @@
           self.screen.insertBefore(resp, self.fieldwrap);
           
           self.field.innerHTML = '';
+          
+          // Auto-scroll to follow the output
+          self.scrollToBottom();
+          
           resolve();
         });
       },
@@ -194,6 +198,9 @@
           resp.className = 'terminal_emulator__response';
           resp.innerHTML = response;
           self.screen.insertBefore(resp, self.fieldwrap);
+          
+          // Auto-scroll to follow the output
+          self.scrollToBottom();
           
           resolve();
         });
@@ -231,8 +238,22 @@
           }
           self.field.innerHTML = '';
           self.field.classList.remove('waiting');
+          
+          // Reset scroll position
+          self.screen.parentElement.scrollTop = 0;
+          
           resolve();
         });
+      },
+      
+      scrollToBottom: function() {
+        var self = this;
+        // Auto-scroll to the bottom to follow output like a real terminal
+        // Smooth scrolling behavior is handled by CSS scroll-behavior property
+        var container = self.screen.parentElement;
+        if (container) {
+          container.scrollTop = container.scrollHeight;
+        }
       }
     };
 
