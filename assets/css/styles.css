@@ -408,9 +408,19 @@ a:hover{ color: var(--accent); }
   text-shadow: 
     0 0 5px rgba(100,255,218,.4),
     0 0 10px rgba(100,255,218,.2);
-  /* Fixed height to prevent layout shift during typing animation */
+  /* Fixed height with auto-scroll to follow output like a real terminal */
   height: 320px;
-  overflow-y: hidden;
+  overflow-y: auto;
+  /* Hide scrollbar while maintaining scroll functionality */
+  scrollbar-width: none; /* Firefox */
+  -ms-overflow-style: none; /* IE/Edge */
+  /* Smooth scrolling for better UX */
+  scroll-behavior: smooth;
+}
+
+/* Hide scrollbar for Chrome, Safari and Opera */
+.terminal pre::-webkit-scrollbar {
+  display: none;
 }
 
 /* Responsive terminal height for smaller screens (Bootstrap lg breakpoint) */
