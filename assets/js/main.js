@@ -1,4 +1,5 @@
 /* Sysnordic UI micro-interactions:
+   - Development notice popup (shown once per session)
    - Hero terminal typing (enhanced with realistic delays)
    - Reveal on scroll
    - Smooth scroll for in-page anchors
@@ -8,6 +9,42 @@
   // Ensure DOM is fully loaded before running
   function initializeApp() {
     var prefersReduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+    // Development notice popup — shown once per session
+    if (!sessionStorage.getItem('devNoticeSeen')) {
+      var overlay = document.createElement('div');
+      overlay.id = 'dev-notice-overlay';
+      overlay.setAttribute('role', 'dialog');
+      overlay.setAttribute('aria-modal', 'true');
+      overlay.setAttribute('aria-labelledby', 'dev-notice-title');
+
+      overlay.innerHTML =
+        '<div id="dev-notice-box">' +
+          '<div class="dev-notice-icon">🔧</div>' +
+          '<h2 id="dev-notice-title" class="mono">Under utvikling</h2>' +
+          '<p>Sysnordic er for øyeblikket under utvikling og midlertidig på pause. ' +
+          'Vi jobber med å gjøre oss klare og ser frem til å betjene deg snart.</p>' +
+          '<button id="dev-notice-close" class="btn btn-glow w-100">Forstått</button>' +
+        '</div>';
+
+      document.body.appendChild(overlay);
+
+      var closeBtn = document.getElementById('dev-notice-close');
+      function dismissNotice() {
+        sessionStorage.setItem('devNoticeSeen', '1');
+        overlay.setAttribute('aria-hidden', 'true');
+        overlay.classList.add('hidden');
+        document.removeEventListener('keydown', keyHandler);
+      }
+      closeBtn.addEventListener('click', dismissNotice);
+      overlay.addEventListener('click', function(e) {
+        if (e.target === overlay) dismissNotice();
+      });
+      function keyHandler(e) {
+        if (e.key === 'Escape') dismissNotice();
+      }
+      document.addEventListener('keydown', keyHandler);
+    }
 
     // Smooth scroll
     document.querySelectorAll('a[href^="#"]').forEach(function(a){
