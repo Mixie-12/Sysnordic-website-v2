@@ -630,3 +630,45 @@ a:hover{ color: var(--accent); }
   .crt-overlay{ animation:none; }
   .btn-glow:before, .btn-outline-ice:before{ display: none; }
 }
+
+/* Development notice popup */
+#dev-notice-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 10000;
+  background: rgba(5, 6, 10, .72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1.5rem;
+}
+#dev-notice-overlay.hidden {
+  display: none;
+}
+#dev-notice-box {
+  background: var(--glass);
+  border: 1px solid var(--stroke);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow), 0 0 60px rgba(100,255,218,.06);
+  max-width: 460px;
+  width: 100%;
+  padding: 2rem 2rem 1.75rem;
+  position: relative;
+}
+#dev-notice-box .dev-notice-icon {
+  font-size: 1.6rem;
+  margin-bottom: .75rem;
+}
+#dev-notice-box h2 {
+  font-size: 1.15rem;
+  font-weight: 700;
+  margin-bottom: .6rem;
+  color: var(--fg);
+}
+#dev-notice-box p {
+  color: var(--muted);
+  font-size: .95rem;
+  margin-bottom: 1.4rem;
+  line-height: 1.6;
+}
